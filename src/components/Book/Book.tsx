@@ -1,56 +1,13 @@
 import * as React from 'react';
 import './Book.css';
+import Book from '../../models/Book';
 // import * as BooksApi from '../../BooksAPI';
-interface IndustryIdentifier {
-    type: string;
-    identifier: string;
-}
-  
-interface ReadingModes {
-text: boolean;
-image: boolean;
-}
-
-interface ImageLinks {
-smallThumbnail: string;
-thumbnail: string;
-}
-
-interface BookType {
-title: string;
-subtitle?: string;
-authors: string[];
-publisher: string;
-publishedDate: string;
-description: string;
-industryIdentifiers: IndustryIdentifier[];
-panelizationSummary?: PanelizationSummary;
-readingModes: ReadingModes;
-pageCount: number;
-printType: string;
-categories: string[];
-averageRating?: number;
-ratingsCount?: number;
-maturityRating: string;
-allowAnonLogging: boolean;
-contentVersion: string;
-imageLinks: ImageLinks;
-language: string;
-previewLink: string;
-infoLink: string;
-canonicalVolumeLink: string;
-id: string;
-}
-interface PanelizationSummary { 
-containsEpubBubbles: boolean; 
-containsImageBubbles: boolean; 
-}
 
 interface BookProps {
-    info: BookType;
+    info: Book;
 }
 
-class Book extends React.Component<BookProps> {
+class BookComponent extends React.Component<BookProps> {
   render() {
     let { title, authors, imageLinks } = this.props.info;
     return (
@@ -58,7 +15,7 @@ class Book extends React.Component<BookProps> {
         <div className="container">
             <img 
                 className="myreads-image"
-                src={imageLinks.thumbnail}
+                src={imageLinks && imageLinks.thumbnail || ''}
             />
             <div className="myreads-info">
                 <div className="myreads-title">
@@ -76,4 +33,4 @@ class Book extends React.Component<BookProps> {
   }
 }
 
-export default Book;
+export default BookComponent;

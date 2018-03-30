@@ -1,100 +1,78 @@
 import * as React from 'react';
 import * as BooksApi from '../../BooksAPI';
 // import mockBooks from './mockbooks';
-import Book from '../Book/Book';
+import BookComponent from '../Book/Book';
+import Book from '../../models/Book';
 import './Search.css';
-
-interface IndustryIdentifier {
-  type: string;
-  identifier: string;
-}
-
-interface ReadingModes {
-  text: boolean;
-  image: boolean;
-}
-
-interface ImageLinks {
-  smallThumbnail: string;
-  thumbnail: string;
-}
-
-interface BookType {
-  title: string;
-  subtitle?: string;
-  authors: string[];
-  publisher: string;
-  publishedDate: string;
-  description: string;
-  industryIdentifiers: IndustryIdentifier[];
-  panelizationSummary?: PanelizationSummary;
-  readingModes: ReadingModes;
-  pageCount: number;
-  printType: string;
-  categories: string[];
-  averageRating?: number;
-  ratingsCount?: number;
-  maturityRating: string;
-  allowAnonLogging: boolean;
-  contentVersion: string;
-  imageLinks: ImageLinks;
-  language: string;
-  previewLink: string;
-  infoLink: string;
-  canonicalVolumeLink: string;
-  id: string;
-}
-interface PanelizationSummary { 
-  containsEpubBubbles: boolean; 
-  containsImageBubbles: boolean; 
-}
+import searchTerms from './searchTerms';
 
 class Search extends React.Component {
+  noResultsInfo: any;
   state = {
     query: '',
     books: []
   };
+  constructor(props: {}) {
+    super(props);
+    this.noResultsInfo = this.getNoResultInfo();
+
+  }
 
   updateQuery = (query: string) => {
+    this.setState({query: query.trim()});
     if (query.trim()) {
       BooksApi.search(query.trim())
-      .then((results: BookType[] | any) => {
+      .then((results: Book[] | any) => {
         if (!results.error) {
           this.setState({
-            books: results,
-            query: query.trim()
+            books: results
           });
         } else {
           this.setState({
-            books: [],
-            query: query.trim()
+            books: []
           });
         }
       });
     } else {
       this.setState({
-        books: [],
-        query: query.trim()
+        books: []
       });
     }
   }
+
+  getRandomSearchTerm = () => {
+    const term = searchTerms[Math.floor(Math.random() * (searchTerms.length - 4))];
+    return (
+      <a href="#" onClick={() => this.updateQuery(term)}>{term}</a>
+    );
+  }
+
+  getNoResultInfo = () => {
+    return (
+      <div className="myreads-noresults">
+      No results, try search for&nbsp; 
+      {this.getRandomSearchTerm()},&nbsp; 
+      {this.getRandomSearchTerm()}, or&nbsp; 
+      {this.getRandomSearchTerm()}.
+    </div>
+    );
+  }
   
   render() {
-    const { books } = this.state;
+    const { books, query } = this.state;
     return (
       <div className="myreads-search">
         <input 
           type="text"
+          value={query}
           className="search"
           placeholder="Search"
           onChange={(event) => this.updateQuery(event.target.value)}
         />
-        {!books.length && (
-          <div>Test</div>
-        )}
+        {!books.length && this.noResultsInfo}
         <div className="myreads-results">
-          {books.map((book: BookType) => (
-            <Book info={book} key={book.id}/>
+          {books.map((book: Book) => (
+            <BookComponent info={book} key={book.id}/>
           ))}
         </div>
       </div>
