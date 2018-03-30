@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Arya|Niconne|Pinyon+Script|Sarina|UnifrakturMaguntia');
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #FCFCFC;
+    height: 50px;
+    align-items: center;
+    padding: 25px;
+    border-top: 7px solid #74B3CE;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+}
+
+.myreads-brand {
+    font-size: 2em;
+    font-family: 'Sarina', cursive;
+    color: #0F0F0F;
+}
+
+.myreads-button {
+    margin: 5px;
+    background-color: #74B3CE;
+    border: none;
+    color: #FCFCFC;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.myreads-button:hover {
+    background-color: rgba(0,0,0,0);
+    border: 3px solid #74B3CE;
+    color: #74B3CE;
+    padding: 7px;
+}

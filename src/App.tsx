@@ -1,19 +1,22 @@
 import * as React from 'react';
 import './App.css';
-
-const logo = require('./logo.svg');
+// import * as BooksApi from './BooksAPI';
+import { Route } from 'react-router-dom';
+import Nav from './components/Nav/Nav';
+import Search from './components/Search/Search';
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Nav />
+        <Route 
+          exact={true}
+          path="/search" 
+          render={() => (
+            <Search />
+          )}
+        />
       </div>
     );
   }
