@@ -6,9 +6,14 @@ import Book from '../../models/Book';
 import './Search.css';
 import searchTerms from './searchTerms';
 
+interface SearchState {
+  books: Book[];
+  query: string;
+}
+
 class Search extends React.Component {
-  noResultsInfo: any;
-  state = {
+  noResultsInfo: JSX.Element;
+  state: SearchState = {
     query: '',
     books: []
   };
@@ -22,7 +27,7 @@ class Search extends React.Component {
     this.setState({query: query.trim()});
     if (query.trim()) {
       BooksApi.search(query.trim())
-      .then((results: Book[] | any) => {
+      .then((results) => {
         if (!results.error) {
           this.setState({
             books: results
@@ -40,14 +45,14 @@ class Search extends React.Component {
     }
   }
 
-  getRandomSearchTerm = () => {
+  getRandomSearchTerm = (): JSX.Element => {
     const term = searchTerms[Math.floor(Math.random() * (searchTerms.length - 4))];
     return (
       <a href="#" onClick={() => this.updateQuery(term)}>{term}</a>
     );
   }
 
-  getNoResultInfo = () => {
+  getNoResultInfo = (): JSX.Element => {
     return (
       <div className="myreads-noresults">
       No results, try search for&nbsp; 
