@@ -1,0 +1,19 @@
+h3 {
+    padding-left: 10px;
+}
+
+.myreads-results {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.myreads-noresults {
+    padding-top: 5px;
+    text-align: center;
+}
+
+.myreads-noresults > a {
+    text-decoration: none;
+    color: rgba(0,0,255,.7);
+}
+

@@ -17,13 +17,13 @@ class Search extends React.Component {
     query: '',
     books: []
   };
+
   constructor(props: {}) {
     super(props);
     this.noResultsInfo = this.getNoResultInfo();
-
   }
 
-  updateQuery = (query: string) => {
+  updateQuery(query: string) {
     this.setState({query: query.trim()});
     if (query.trim()) {
       BooksApi.search(query.trim())
@@ -45,14 +45,14 @@ class Search extends React.Component {
     }
   }
 
-  getRandomSearchTerm = (): JSX.Element => {
+  getRandomSearchTerm(): JSX.Element {
     const term = searchTerms[Math.floor(Math.random() * (searchTerms.length - 4))];
     return (
       <a href="#" onClick={() => this.updateQuery(term)}>{term}</a>
     );
   }
 
-  getNoResultInfo = (): JSX.Element => {
+  getNoResultInfo(): JSX.Element {
     return (
       <div className="myreads-noresults">
       No results, try search for&nbsp; 

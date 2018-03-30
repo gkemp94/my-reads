@@ -42,4 +42,5 @@ export default interface Book {
     infoLink: string;
     canonicalVolumeLink: string;
     id: string;
+    shelf?: string;
 }

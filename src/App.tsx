@@ -4,6 +4,7 @@ import './App.css';
 import { Route } from 'react-router-dom';
 import Nav from './components/Nav/Nav';
 import Search from './components/Search/Search';
+import Bookshelf from './components/Bookshelf/Bookshelf';
 
 class App extends React.Component {
   render() {
@@ -15,6 +16,13 @@ class App extends React.Component {
           path="/search" 
           render={() => (
             <Search />
+          )}
+        />
+        <Route 
+          exact={true}
+          path="/" 
+          render={() => (
+            <Bookshelf />
           )}
         />
       </div>
