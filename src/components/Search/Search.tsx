@@ -1,21 +1,23 @@
 import * as React from 'react';
 import * as BooksApi from '../../BooksAPI';
-// import mockBooks from './mockbooks';
+import './Search.css';
+
 import BookComponent from '../Book/Book';
 import Book from '../../models/Book';
-import './Search.css';
 import searchTerms from './searchTerms';
 
 interface SearchState {
   books: Book[];
   query: string;
+  myBooks: Book[];
 }
 
 class Search extends React.Component {
   noResultsInfo: JSX.Element;
   state: SearchState = {
     query: '',
-    books: []
+    books: [],
+    myBooks: [],
   };
 
   constructor(props: {}) {
@@ -45,6 +47,26 @@ class Search extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.updateMyBooks();
+  }
+
+  updateMyBooks(): void {
+    BooksApi.getAll()
+      .then((books) => {
+        this.setState({
+          myBooks: books,
+        });
+      });
+  }
+
+  changeShelf(id: string, shelf: string): void {
+    BooksApi.update({id}, shelf)
+      .then((shelves) => {
+        this.updateMyBooks();
+      });
+  }
+
   getRandomSearchTerm(): JSX.Element {
     const term = searchTerms[Math.floor(Math.random() * (searchTerms.length - 4))];
     return (
@@ -64,7 +86,7 @@ class Search extends React.Component {
   }
   
   render() {
-    const { books, query } = this.state;
+    const { books, query, myBooks } = this.state;
     return (
       <div className="myreads-search">
         <input 
@@ -76,9 +98,13 @@ class Search extends React.Component {
         />
         {!books.length && this.noResultsInfo}
         <div className="myreads-results">
-          {books.map((book: Book) => (
-            <BookComponent info={book} key={book.id}/>
-          ))}
+          {books.map((book: Book) => {
+            let bookInMyBook = myBooks.filter((myBook) => book.id === myBook.id);
+            let shelf: string = bookInMyBook.length ? bookInMyBook[0].shelf as string : 'unshelved';
+            return (
+              <BookComponent info={book} key={book.id} shelf={shelf} changeShelf={(id: string, value: string) => this.changeShelf(id, value)} />
+            );
+        })}
         </div>
       </div>
     );
