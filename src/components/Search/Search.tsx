@@ -6,6 +6,8 @@ import BookComponent from '../Book/Book';
 import Book from '../../models/Book';
 import searchTerms from './searchTerms';
 
+import { debounce } from 'lodash';
+
 interface SearchState {
   books: Book[];
   query: string;
@@ -14,6 +16,7 @@ interface SearchState {
 
 class Search extends React.Component {
   noResultsInfo: JSX.Element;
+  queryDebouncer: Function;
   state: SearchState = {
     query: '',
     books: [],
@@ -23,12 +26,17 @@ class Search extends React.Component {
   constructor(props: {}) {
     super(props);
     this.noResultsInfo = this.getNoResultInfo();
+    this.queryDebouncer = debounce((query) => this.queryAPI(query), 500);
   }
 
   updateQuery(query: string) {
     this.setState({query: query.trim()});
+    this.queryDebouncer(query);
+  }
+
+  queryAPI(query: string) {
     if (query.trim()) {
-      BooksApi.search(query.trim())
+    BooksApi.search(query.trim())
       .then((results) => {
         if (!results.error) {
           this.setState({
