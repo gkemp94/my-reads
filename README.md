@@ -4,8 +4,6 @@ MyReads is a bookshelf app that allows you to select and shelf books that you ha
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
 You must have node & access to the internet to run this project. 
@@ -24,7 +22,6 @@ then
 yarn start
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Live Demo
 
