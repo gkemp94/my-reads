@@ -102,7 +102,12 @@ class Search extends React.Component {
             let bookInMyBook = myBooks.filter((myBook) => book.id === myBook.id);
             let shelf: string = bookInMyBook.length ? bookInMyBook[0].shelf as string : 'unshelved';
             return (
-              <BookComponent info={book} key={book.id} shelf={shelf} changeShelf={(id: string, value: string) => this.changeShelf(id, value)} />
+              <BookComponent 
+                info={book} 
+                key={book.id} 
+                shelf={shelf} 
+                changeShelf={(id: string, value: string) => this.changeShelf(id, value)} 
+              />
             );
         })}
         </div>
